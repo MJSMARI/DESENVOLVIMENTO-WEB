@@ -1,4 +1,3 @@
-
 //para acessar: C:\Users\maril\DESENVOLVIMENTO-WEB\appweb_calculadora>node .\index.js
 
 //CARREGA FRAMEWORK EXPRESS
@@ -35,4 +34,3 @@ app.get('/calculadora//somar/:a/:b', (req, res)=>{
 app.listen(PORT, ()=>{
     console.log('app rodando na porta ' + PORT);
 });
-

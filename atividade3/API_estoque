@@ -1,0 +1,57 @@
+
+
+//CARREGA FRAMEWORK EXPRESS
+const express = require('express');
+
+
+
+//CRIA UM APP USANDO A FUNÇÃO EXPRESS()
+const app = express();
+
+//DEFINE PORTA DE APLICAÇÃO
+const PORT = 8080;
+
+let estoque = {};
+
+app.get('/adicionar/:id/:nome/:qtd', (req, res)=>{
+
+    const {id, nome, qtd} = req.params;
+
+    if (estoque[id]) {
+        return  res.send("id ja existe");
+    }
+   estoque[id] = {id: id, nome: nome, qtd: parseInt(qtd)};
+   res.send("produto adicionado")
+
+});  
+
+app.get('/listar', (req, res)=>{
+    res.send(`lista de produtos: ${JSON.stringify(Object.values(estoque))}`);
+});  
+
+app.get('/remover/:id' , (req, res)=>{
+
+    const {id} = req.params;
+    if (estoque[id]) {
+        const produtoRemovido = estoque[id];
+        delete estoque[id];
+        return  res.send(`produto ${JSON.stringify(produtoRemovido)} removido`);
+    }
+});  
+
+app.get('/editar/:id/:qtd' , (req, res)=>{
+    const {id, qtd} = req.params;
+
+    if (estoque[id]) {
+        estoque[id].qtd = parseInt(qtd);
+        return res.send(`alterado, ${JSON.stringify(estoque[id])}`);
+    }
+    
+});  
+
+ 
+//FORMA DE CRIAR UMA FUNÇÃO, SEM DEFINIR ELA.
+app.listen(PORT, ()=>{
+    console.log('app rodando na porta ' + PORT);
+});
+
